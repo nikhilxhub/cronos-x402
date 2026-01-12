@@ -1,23 +1,32 @@
 import chalk from "chalk";
 import boxen from "boxen";
-// Remove the figlet import
 
-export function showBanner2() {
-   console.log(
-      chalk.bold.hex('#CD6F47')(`
-
- █████   ██████  ███████ ███    ██ ████████ ██   ██ ██   ██  ██████  ██████  
-██   ██ ██       ██      ████   ██    ██     ██ ██  ██   ██ ██  ████      ██ 
-███████ ██   ███ █████   ██ ██  ██    ██      ███   ███████ ██ ██ ██  █████  
-██   ██ ██    ██ ██      ██  ██ ██    ██     ██ ██       ██ ████  ██ ██      
-██   ██  ██████  ███████ ██   ████    ██    ██   ██      ██  ██████  ███████ 
-                                                                        
+export function showBanner() {
+  console.log(
+    chalk.bold.hex('#3B82F6')(`
+ ██████ ██████   ██████  ███    ██  ██████  ███████ ███    ███ ██ ███    ██ ██████  ███████
+██      ██   ██ ██    ██ ████   ██ ██    ██ ██      ████  ████ ██ ████   ██ ██   ██ ██
+██      ██████  ██    ██ ██ ██  ██ ██    ██ ███████ ██ ████ ██ ██ ██ ██  ██ ██   ██ ███████
+██      ██   ██ ██    ██ ██  ██ ██ ██    ██      ██ ██  ██  ██ ██ ██  ██ ██ ██   ██      ██
+ ██████ ██   ██  ██████  ██   ████  ██████  ███████ ██      ██ ██ ██   ████ ██████  ███████
 `)
-    );
-    console.log(
-      chalk.gray('AI-powered coding assistant with MCP tool support')
-    );
-    console.log(chalk.gray("Type your questions or '/exit' to quit\n"));
+  );
+
+  console.log(
+    boxen(
+      chalk.cyan('Pay-Per-Prompt AI on Cronos zkEVM') + '\n' +
+      chalk.gray('Access premium AI models with micro-transactions'),
+      {
+        padding: 1,
+        margin: { top: 0, bottom: 1, left: 0, right: 0 },
+        borderStyle: 'round',
+        borderColor: 'blue'
+      }
+    )
+  );
 }
+
+// Keep old export name for compatibility
+export const showBanner2 = showBanner;
 
   

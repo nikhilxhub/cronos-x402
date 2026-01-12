@@ -27,7 +27,7 @@ premiumRouter.post(
         return res.status(404).json({ error: "model/api key not found" });
       }
 
-      const receiver = apiKeyEntry.owner_sol;
+      const receiver = apiKeyEntry.owner_cronos;
       const rateWei = apiKeyEntry.rate_per_request;
       const aiModel = apiKeyEntry.ai_model;
       const api_key = apiKeyEntry.api_key;

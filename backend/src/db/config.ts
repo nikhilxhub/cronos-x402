@@ -4,38 +4,42 @@ dotenv.config();
 type ApiKeyRecord = {
   ai_model: string;
   api_key: string;
-  owner_sol: string;
+  owner_cronos: string;
   rate_per_request: number;
 };
 
 // Local in-memory key store
+// Note: rate_per_request is in wei (1 zkTCRO = 10^18 wei)
 const apiKeyMap: Record<string, ApiKeyRecord> = {
-  "gpt-3.5-turbo": {
-    ai_model: "gpt-3.5-turbo",
+  // GPT-4o (0.5 zkTCRO)
+  "gpt-4o": {
+    ai_model: "gpt-4o",
     api_key: process.env.OPENAI_API_KEY!,
-    owner_sol: process.env.DEFAULT_OWNER ?? "0x270D5381a5C46043995aDB3Dc251af7Bf03a3bEa",
-    rate_per_request:  100000000000000000,
+    owner_cronos: process.env.SERVER_WALLET_ADDRESS ?? "0x270D5381a5C46043995aDB3Dc251af7Bf03a3bEa",
+    rate_per_request: 500000000000000000, // 0.5 zkTCRO
   },
+  // GPT-4o-mini (0.15 zkTCRO)
+  "gpt-4o-mini": {
+    ai_model: "gpt-4o-mini",
+    api_key: process.env.OPENAI_API_KEY!,
+    owner_cronos: process.env.SERVER_WALLET_ADDRESS ?? "0x270D5381a5C46043995aDB3Dc251af7Bf03a3bEa",
+    rate_per_request: 150000000000000000, // 0.15 zkTCRO
+  },
+  // Groq/Llama3 (0.1 zkTCRO)
   "groq": {
     ai_model: "groq",
     api_key: process.env.groq_API_KEY!,
-    owner_sol: process.env.DEFAULT_OWNER ?? "0x270D5381a5C46043995aDB3Dc251af7Bf03a3bEa",
-    rate_per_request: 100000000000000000,
+    owner_cronos: process.env.SERVER_WALLET_ADDRESS ?? "0x270D5381a5C46043995aDB3Dc251af7Bf03a3bEa",
+    rate_per_request: 100000000000000000, // 0.1 zkTCRO
   },
-  "gemini-2": {
-    ai_model: "gemini-2",
-    api_key: process.env.GOOGLE_API_KEY2!,
-    owner_sol: process.env.DEFAULT_OWNER ?? "0x270D5381a5C46043995aDB3Dc251af7Bf03a3bEa",
-    rate_per_request: 100000000000000000,
-  },
+  // Gemini 2.0 Flash (0.2 zkTCRO)
   "gemini-2.5-pro": {
     ai_model: "gemini-2.5-pro",
     api_key: process.env.GOOGLE_API_KEY!,
-    owner_sol: process.env.DEFAULT_OWNER ?? "0x270D5381a5C46043995aDB3Dc251af7Bf03a3bEa",
-    rate_per_request: 100000000000000000,
+    owner_cronos: process.env.SERVER_WALLET_ADDRESS ?? "0x270D5381a5C46043995aDB3Dc251af7Bf03a3bEa",
+    rate_per_request: 200000000000000000, // 0.2 zkTCRO
   },
 };
-
 
 export function findApiKeyToModel2(modelKey: string): ApiKeyRecord | null {
   if (!modelKey) return null;
