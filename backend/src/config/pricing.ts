@@ -1,5 +1,5 @@
 // Model pricing configuration for CronosMinds
-// Prices are in zkTCRO (Cronos zkEVM Testnet native token)
+// Prices are in TCRO (Cronos EVM Testnet native token)
 
 export interface ModelConfig {
   name: string;
@@ -11,24 +11,36 @@ export interface ModelConfig {
 export const MODEL_PRICING: Record<string, ModelConfig> = {
   // OpenAI Models
   "gpt-4o": {
-    name: "GPT-4o",
+    name: "GPT-3.5 Turbo",
     costTCRO: 0.5,
-    description: "OpenAI's latest multimodal model",
+    description: "OpenAI's reliable model",
     aiModel: "gpt-4o"
   },
   "gpt-4o-mini": {
-    name: "GPT-4o Mini",
+    name: "GPT-3.5 Turbo",
     costTCRO: 0.15,
     description: "Fast and affordable OpenAI model",
     aiModel: "gpt-4o-mini"
   },
 
   // Google Models
-  "gemini-pro": {
-    name: "Gemini 2.0 Flash",
+  "gemini-2.5-flash": {
+    name: "Gemini 2.5 Flash",
     costTCRO: 0.2,
     description: "Google's fast AI model",
+    aiModel: "gemini-2.5-flash"
+  },
+  "gemini-2.5-pro": {
+    name: "Gemini 2.5 Pro",
+    costTCRO: 0.5,
+    description: "Google's most capable AI model",
     aiModel: "gemini-2.5-pro"
+  },
+  "gemini-2.0-flash": {
+    name: "Gemini 2.0 Flash",
+    costTCRO: 0.15,
+    description: "Google's next-gen flash model",
+    aiModel: "gemini-2.0-flash"
   },
 
   // Groq Models

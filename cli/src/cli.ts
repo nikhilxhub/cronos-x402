@@ -28,11 +28,13 @@ import {
 
 // Model definitions with pricing (must match backend/src/config/pricing.ts)
 const MODELS = [
-  // OpenAI
-  { name: "GPT-4o", value: "gpt-4o", costTCRO: 0.5, description: "OpenAI's latest model" },
-  { name: "GPT-4o Mini", value: "gpt-4o-mini", costTCRO: 0.15, description: "Fast & affordable OpenAI" },
+  // OpenAI - Temporarily disabled due to quota limits
+  // { name: "GPT-3.5 Turbo", value: "gpt-4o", costTCRO: 0.5, description: "OpenAI's reliable model" },
+  // { name: "GPT-3.5 Turbo", value: "gpt-4o-mini", costTCRO: 0.15, description: "Fast & affordable OpenAI" },
   // Google
-  { name: "Gemini 2.0 Flash", value: "gemini-pro", costTCRO: 0.2, description: "Google's fast model" },
+  { name: "Gemini 2.5 Flash", value: "gemini-2.5-flash", costTCRO: 0.2, description: "Google's fast model" },
+  { name: "Gemini 2.5 Pro", value: "gemini-2.5-pro", costTCRO: 0.5, description: "Google's most capable model" },
+  { name: "Gemini 2.0 Flash", value: "gemini-2.0-flash", costTCRO: 0.15, description: "Google's next-gen flash model" },
   // Groq
   { name: "Llama 3.3 70B", value: "groq", costTCRO: 0.1, description: "Ultra-fast via Groq" }
 ];
@@ -44,15 +46,15 @@ function showHelp() {
   console.log(
     boxen(
       chalk.bold.cyan("CronosMinds Commands\n\n") +
-        chalk.yellow("/help") + "            Show this help message\n" +
-        chalk.yellow("/balance") + "         Check wallet balance\n" +
-        chalk.yellow("/address") + "         Show wallet address\n" +
-        chalk.yellow("/model") + "           Change AI model\n" +
-        chalk.yellow("/models") + "          List available models & pricing\n" +
-        chalk.yellow("/wallet") + "          Show wallet file location\n" +
-        chalk.yellow("/clear") + "           Clear the screen\n" +
-        chalk.yellow("/exit") + "            Quit the application\n\n" +
-        chalk.gray("Just type your question to chat with AI!"),
+      chalk.yellow("/help") + "            Show this help message\n" +
+      chalk.yellow("/balance") + "         Check wallet balance\n" +
+      chalk.yellow("/address") + "         Show wallet address\n" +
+      chalk.yellow("/model") + "           Change AI model\n" +
+      chalk.yellow("/models") + "          List available models & pricing\n" +
+      chalk.yellow("/wallet") + "          Show wallet file location\n" +
+      chalk.yellow("/clear") + "           Clear the screen\n" +
+      chalk.yellow("/exit") + "            Quit the application\n\n" +
+      chalk.gray("Just type your question to chat with AI!"),
       {
         padding: 1,
         borderStyle: "round",
@@ -72,10 +74,10 @@ function showModels() {
     const suffix = isCurrent ? chalk.green(" (current)") : "";
     console.log(
       prefix +
-        chalk.cyan(`${model.name}`) +
-        chalk.yellow(` (${model.costTCRO} TCRO)`) +
-        chalk.gray(` - ${model.description}`) +
-        suffix
+      chalk.cyan(`${model.name}`) +
+      chalk.yellow(` (${model.costTCRO} TCRO)`) +
+      chalk.gray(` - ${model.description}`) +
+      suffix
     );
   });
   console.log("");
@@ -106,13 +108,13 @@ async function displayWalletInfo(walletInfo: WalletInfo) {
   console.log(
     boxen(
       chalk.gray("Address: ") + chalk.cyan(walletInfo.address) + "\n" +
-        chalk.gray("Balance: ") +
-        (balanceNum > 0
-          ? chalk.green(`${balance} TCRO`)
-          : chalk.red(`${balance} TCRO`)) +
-        "\n" +
-        chalk.gray("Network: ") + chalk.blue(CRONOS_TESTNET.name) + "\n" +
-        chalk.gray("Model:   ") + chalk.yellow(`${currentModel.name} (${currentModel.costTCRO} TCRO/prompt)`),
+      chalk.gray("Balance: ") +
+      (balanceNum > 0
+        ? chalk.green(`${balance} TCRO`)
+        : chalk.red(`${balance} TCRO`)) +
+      "\n" +
+      chalk.gray("Network: ") + chalk.blue(CRONOS_TESTNET.name) + "\n" +
+      chalk.gray("Model:   ") + chalk.yellow(`${currentModel.name} (${currentModel.costTCRO} TCRO/prompt)`),
       {
         padding: 1,
         borderStyle: "round",
@@ -124,7 +126,7 @@ async function displayWalletInfo(walletInfo: WalletInfo) {
   );
 
   if (balanceNum === 0) {
-    log.warn("Balance is 0. Get testnet TCRO from the Cronos zkEVM faucet.");
+    log.warn("Balance is 0. Get testnet TCRO from the Cronos EVM faucet.");
   }
 
   console.log(chalk.gray("Type /help for commands or just ask a question!\n"));
@@ -134,7 +136,7 @@ async function setupWallet(): Promise<WalletData> {
   console.log(
     boxen(
       chalk.bold("Welcome to CronosMinds!\n\n") +
-        chalk.gray("Let's set up your wallet to get started."),
+      chalk.gray("Let's set up your wallet to get started."),
       {
         padding: 1,
         borderStyle: "round",
@@ -165,8 +167,8 @@ async function setupWallet(): Promise<WalletData> {
     console.log(
       boxen(
         chalk.green("Address: ") + chalk.cyan(walletData.address) + "\n\n" +
-          chalk.yellow("Saved to: ") + chalk.gray(getWalletPath()) + "\n\n" +
-          chalk.red.bold("⚠ BACKUP YOUR WALLET FILE!"),
+        chalk.yellow("Saved to: ") + chalk.gray(getWalletPath()) + "\n\n" +
+        chalk.red.bold("⚠ BACKUP YOUR WALLET FILE!"),
         { padding: 1, borderStyle: "round", borderColor: "green" }
       )
     );
@@ -229,7 +231,7 @@ async function processPrompt(
   }
 
   // Process payment
-  const paymentSpinner = ora("Processing payment on Cronos zkEVM...").start();
+  const paymentSpinner = ora("Processing payment on Cronos EVM...").start();
 
   try {
     const tx = await sendPayment(walletInfo, serverWallet, currentModel.costTCRO);

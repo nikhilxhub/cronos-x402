@@ -20,7 +20,7 @@ export async function callModel_Api(opts: CallModelOptions): Promise<string> {
       case "gpt-4o-mini": {
         const openai = createOpenAI({ apiKey: api_key });
         const { text } = await generateText({
-          model: openai("gpt-4o-mini"),
+          model: openai("gpt-3.5-turbo"),
           prompt
         });
         return text;
@@ -29,14 +29,32 @@ export async function callModel_Api(opts: CallModelOptions): Promise<string> {
       case "gpt-4o": {
         const openai = createOpenAI({ apiKey: api_key });
         const { text } = await generateText({
-          model: openai("gpt-4o"),
+          model: openai("gpt-3.5-turbo"),
           prompt
         });
         return text;
       }
 
       // Google Gemini Models
+      case "gemini-2.5-flash": {
+        const google = createGoogleGenerativeAI({ apiKey: api_key });
+        const { text } = await generateText({
+          model: google("gemini-2.5-flash"),
+          prompt
+        });
+        return text;
+      }
+
       case "gemini-2.5-pro": {
+        const google = createGoogleGenerativeAI({ apiKey: api_key });
+        const { text } = await generateText({
+          model: google("gemini-2.5-pro"),
+          prompt
+        });
+        return text;
+      }
+
+      case "gemini-2.0-flash": {
         const google = createGoogleGenerativeAI({ apiKey: api_key });
         const { text } = await generateText({
           model: google("gemini-2.0-flash"),
@@ -48,7 +66,7 @@ export async function callModel_Api(opts: CallModelOptions): Promise<string> {
       case "gemini-2": {
         const google = createGoogleGenerativeAI({ apiKey: api_key });
         const { text } = await generateText({
-          model: google("gemini-2.0-flash"),
+          model: google("gemini-1.5-flash-001"),
           prompt
         });
         return text;

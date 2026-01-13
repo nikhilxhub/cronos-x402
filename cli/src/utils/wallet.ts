@@ -124,7 +124,7 @@ export async function hasSufficientBalance(
 ): Promise<boolean> {
   const balance = await walletInfo.provider.getBalance(walletInfo.address);
   const required = ethers.parseEther(amountTCRO.toString());
-  // Add buffer for gas - zkEVM requires more gas than standard EVM
+  // Add buffer for gas
   const gasBuffer = ethers.parseEther("0.01");
   return balance >= (required + gasBuffer);
 }

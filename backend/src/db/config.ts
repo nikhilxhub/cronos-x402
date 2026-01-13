@@ -32,12 +32,26 @@ const apiKeyMap: Record<string, ApiKeyRecord> = {
     owner_cronos: process.env.SERVER_WALLET_ADDRESS ?? "0x270D5381a5C46043995aDB3Dc251af7Bf03a3bEa",
     rate_per_request: 100000000000000000, // 0.1 zkTCRO
   },
-  // Gemini 2.0 Flash (0.2 zkTCRO)
+  // Gemini 2.5 Flash (0.2 zkTCRO)
+  "gemini-2.5-flash": {
+    ai_model: "gemini-2.5-flash",
+    api_key: process.env.GOOGLE_API_KEY!,
+    owner_cronos: process.env.SERVER_WALLET_ADDRESS ?? "0x270D5381a5C46043995aDB3Dc251af7Bf03a3bEa",
+    rate_per_request: 200000000000000000, // 0.2 zkTCRO
+  },
+  // Gemini 2.5 Pro (0.5 zkTCRO)
   "gemini-2.5-pro": {
     ai_model: "gemini-2.5-pro",
     api_key: process.env.GOOGLE_API_KEY!,
     owner_cronos: process.env.SERVER_WALLET_ADDRESS ?? "0x270D5381a5C46043995aDB3Dc251af7Bf03a3bEa",
-    rate_per_request: 200000000000000000, // 0.2 zkTCRO
+    rate_per_request: 500000000000000000, // 0.5 zkTCRO
+  },
+  // Gemini 2.0 Flash (0.15 zkTCRO)
+  "gemini-2.0-flash": {
+    ai_model: "gemini-2.0-flash",
+    api_key: process.env.GOOGLE_API_KEY!,
+    owner_cronos: process.env.SERVER_WALLET_ADDRESS ?? "0x270D5381a5C46043995aDB3Dc251af7Bf03a3bEa",
+    rate_per_request: 150000000000000000, // 0.15 zkTCRO
   },
 };
 

@@ -24,11 +24,11 @@ app.get("/health", (_req, res) => res.json({ ok: true }));
 app.get("/info", (_req, res) => {
   res.json({
     name: "CronosMinds",
-    description: "Pay-Per-Prompt AI API on Cronos zkEVM",
+    description: "Pay-Per-Prompt AI API on Cronos EVM",
     network: {
-      name: "Cronos zkEVM Testnet",
-      chainId: 240,
-      rpcUrl: "https://rpc-testnet.zkevm.cronos.org",
+      name: "Cronos EVM Testnet",
+      chainId: 338,
+      rpcUrl: "https://evm-t3.cronos.org",
       currency: "TCRO"
     },
     serverWallet: process.env.SERVER_WALLET_ADDRESS,

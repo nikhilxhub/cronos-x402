@@ -14,7 +14,7 @@ export function showBanner() {
 
   console.log(
     boxen(
-      chalk.cyan('Pay-Per-Prompt AI on Cronos zkEVM') + '\n' +
+      chalk.cyan('Pay-Per-Prompt AI on Cronos EVM') + '\n' +
       chalk.gray('Access premium AI models with micro-transactions'),
       {
         padding: 1,
