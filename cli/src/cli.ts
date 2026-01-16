@@ -205,7 +205,7 @@ async function setupWallet(): Promise<WalletData> {
 async function processPrompt(
   prompt: string,
   walletInfo: WalletInfo,
-  serverWallet: string
+  contractAddress: string
 ): Promise<void> {
   // Check balance
   const hasBalance = await hasSufficientBalance(walletInfo, currentModel.costTCRO);
@@ -230,11 +230,11 @@ async function processPrompt(
     return;
   }
 
-  // Process payment
-  const paymentSpinner = ora("Processing payment on Cronos EVM...").start();
+  // Process payment via smart contract
+  const paymentSpinner = ora("Processing payment via smart contract...").start();
 
   try {
-    const tx = await sendPayment(walletInfo, serverWallet, currentModel.costTCRO);
+    const tx = await sendPayment(walletInfo, contractAddress, currentModel.costTCRO, currentModel.value);
     paymentSpinner.text = `Waiting for confirmation... ${formatAddress(tx.hash)}`;
 
     const receipt = await waitForConfirmation(tx);
@@ -302,8 +302,8 @@ export async function runCli() {
 
   // Get config
   const config = getConfig();
-  if (!config.serverWalletAddress) {
-    log.err("SERVER_WALLET_ADDRESS not set in .env");
+  if (!config.contractAddress) {
+    log.err("CONTRACT_ADDRESS not set in .env");
     process.exit(1);
   }
 
@@ -387,7 +387,7 @@ export async function runCli() {
       }
     } else {
       // Process as AI prompt
-      await processPrompt(trimmed, walletInfo, config.serverWalletAddress);
+      await processPrompt(trimmed, walletInfo, config.contractAddress);
     }
   }
 }

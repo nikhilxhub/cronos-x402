@@ -12,13 +12,13 @@ dotenv.config({ path: path.resolve(__dirname, "../../.env") });
 dotenv.config();
 
 export interface AppConfig {
-  serverWalletAddress: string | null;
+  contractAddress: string | null;
   apiUrl: string;
 }
 
 export function getConfig(): AppConfig {
   return {
-    serverWalletAddress: process.env.SERVER_WALLET_ADDRESS || null,
+    contractAddress: process.env.CONTRACT_ADDRESS || null,
     apiUrl: process.env.API_URL || "http://localhost:3000"
   };
 }
@@ -26,8 +26,8 @@ export function getConfig(): AppConfig {
 export function validateConfig(config: AppConfig): { valid: boolean; errors: string[] } {
   const errors: string[] = [];
 
-  if (!config.serverWalletAddress) {
-    errors.push("SERVER_WALLET_ADDRESS is not set in .env file");
+  if (!config.contractAddress) {
+    errors.push("CONTRACT_ADDRESS is not set in .env file");
   }
 
   return {

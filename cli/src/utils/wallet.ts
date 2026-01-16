@@ -1,5 +1,6 @@
 import { ethers } from "ethers";
 import { log } from "./logger.js";
+import { CRONOS_MINDS_ABI } from "./contract.js";
 
 // Cronos EVM Testnet Configuration (Official x402 Support)
 export const CRONOS_TESTNET = {
@@ -47,37 +48,34 @@ export async function getBalance(walletInfo: WalletInfo): Promise<string> {
 }
 
 /**
- * Send payment transaction to the server wallet
+ * Send payment transaction via CronosMindsPayment smart contract
+ * @param walletInfo - Wallet information
+ * @param contractAddress - CronosMindsPayment contract address
+ * @param amountTCRO - Amount to pay in TCRO
+ * @param model - AI model identifier (e.g., "groq", "gemini-2.5-flash")
  */
 export async function sendPayment(
   walletInfo: WalletInfo,
-  toAddress: string,
-  amountTCRO: number
+  contractAddress: string,
+  amountTCRO: number,
+  model: string
 ): Promise<ethers.TransactionResponse> {
   const amountWei = ethers.parseEther(amountTCRO.toString());
 
-  // Get current fee data for zkEVM
-  const feeData = await walletInfo.provider.getFeeData();
+  // Create contract instance
+  const contract = new ethers.Contract(
+    contractAddress,
+    CRONOS_MINDS_ABI,
+    walletInfo.wallet
+  );
 
-  // Build transaction - let provider estimate gas for zkEVM compatibility
-  const txRequest: ethers.TransactionRequest = {
-    to: toAddress,
+  // Call payForPrompt function with payment value
+  const tx = await contract.getFunction("payForPrompt")(model, {
     value: amountWei,
-    // zkEVM requires higher gas limit than standard 21000
-    gasLimit: 300000n,
-  };
+    gasLimit: 300000n // zkEVM requires higher gas limit
+  });
 
-  // Use EIP-1559 if supported, otherwise legacy gas price
-  if (feeData.maxFeePerGas) {
-    txRequest.maxFeePerGas = feeData.maxFeePerGas;
-    txRequest.maxPriorityFeePerGas = feeData.maxPriorityFeePerGas;
-  } else if (feeData.gasPrice) {
-    txRequest.gasPrice = feeData.gasPrice;
-  }
-
-  const tx = await walletInfo.wallet.sendTransaction(txRequest);
-
-  return tx;
+  return tx as ethers.TransactionResponse;
 }
 
 /**
