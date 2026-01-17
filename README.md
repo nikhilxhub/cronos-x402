@@ -1,8 +1,14 @@
 # CronosMinds
 
+![CronosMinds Logo](./cronosminds.png)
+
 **Pay-Per-Prompt AI Access via Smart Contracts on Cronos**
 
 A decentralized pay-per-prompt application that enables users to access premium AI models (GPT-4o, Gemini, Llama) by paying with TCRO through a smart contract on the Cronos EVM Testnet.
+
+**🌐 Live Backend:** [https://cronos-x402.onrender.com/](https://cronos-x402.onrender.com/)  
+**💚 Health Check:** [https://cronos-x402.onrender.com/health](https://cronos-x402.onrender.com/health)  
+**📜 Smart Contract:** [`0xECD472EFd86460F8f2BD011bA3BeA8ba6A04Da3f`](https://explorer.cronos.org/testnet/address/0xECD472EFd86460F8f2BD011bA3BeA8ba6A04Da3f) (Cronos Testnet)
 
 ---
 
@@ -350,9 +356,7 @@ event PromptPaid(
 |-------|--------------|
 | groq | 0.1 |
 | gemini-2.0-flash | 0.15 |
-| gpt-4o-mini | 0.15 |
 | gemini-2.5-flash | 0.2 |
-| gpt-4o | 0.5 |
 | gemini-2.5-pro | 0.5 |
 
 > **Note:** Currently, the **Groq model is working fine**. Gemini models may experience rate limiting when using free-tier API keys. For production use, consider upgrading to paid API keys for better rate limits and reliability.
@@ -447,7 +451,7 @@ Contributions are welcome! Here's how to get started:
 
 2. Clone your fork:
    ```bash
-   git clone https://github.com/YOUR_USERNAME/cronos-x402.git
+   git clone https://github.com/nikhilxhub/cronos-x402
    cd cronos-x402
    ```
 
